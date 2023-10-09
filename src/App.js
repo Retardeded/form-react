@@ -4,7 +4,6 @@ import Question from './Question.js';
 import axios from 'axios';
 
 function App() {
-  const [audience, setAudience] = useState('');
   const [questions, setQuestions] = useState(['', '', '', '']);
 
   const backendURL = 'http://localhost:3001';
@@ -39,15 +38,15 @@ function App() {
     <div className="container">
       <div className='main-header'>
         <h1>WHAT IS YOUR</h1>
-        <h1>AUDIENCE?</h1>
+        <h1>AUDIENCE ?</h1>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form className="questions-form" onSubmit={handleSubmit}>
         <Question label="WHO ARE YOUR CUSTOMERS?" value={questions[0]} onChange={(value) => handleQuestionChange(0, value)} />
         <Question label="ARE THERE ANY SPECIAL REQUIREMENTS LIKE TECHNOLOGY, LOCATION, ETC?" value={questions[1]} onChange={(value) => handleQuestionChange(1, value)} />
         <Question label="WHAT TYPES OF CUSTOMERS SHOULD BE EXCLUDED?" value={questions[2]} onChange={(value) => handleQuestionChange(2, value)} />
         <Question label="WHAT ARE THE POSITIONS OF YOUR PROSPECTS?" value={questions[3]} onChange={(value) => handleQuestionChange(3, value)} />
         <div className="form-group">
-          <button type="submit">Submit</button>
+          <button type="submit">SUBMIT</button>
         </div>
       </form>
     </div>

@@ -1,7 +1,7 @@
 .question {
-  font-size: 80%;
-  padding: 15px;
-  margin: 15px 0;
+  font-size: 70%;
+  padding: 12px;
+  margin-bottom: 30px;
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   border-bottom: 2px solid #ccc;
@@ -15,8 +15,8 @@
   font-weight: bold;
   display: block;
   text-align: center;
-  font-size: 12px; 
-  margin-bottom: 8px;
+  font-size: 11px; 
+  margin-bottom: 7px;
 }
 
 .question input {
