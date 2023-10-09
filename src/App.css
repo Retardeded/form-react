@@ -21,8 +21,8 @@ body {
 }
 
 .container {
-  width: 100%; /* Adjust the width as needed */
-  margin: 5% auto 10% auto; /* Center horizontally with 5% top and bottom margins */
+  width: 100%;
+  margin: 5% auto 10% auto;
   background-color: white;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 import './App.css';
-import Question from './Question.js';
+import Question from './Question';
 import axios from 'axios';
 
 function App() {
+  const questionLabels = [
+    'WHO ARE YOUR CUSTOMERS?',
+    'ARE THERE ANY SPECIAL REQUIREMENTS LIKE TECHNOLOGY, LOCATION, ETC?',
+    'WHAT TYPES OF CUSTOMERS SHOULD BE EXCLUDED?',
+    'WHAT ARE THE POSITIONS OF YOUR PROSPECTS?',
+  ];
+
   const [questions, setQuestions] = useState(['', '', '', '']);
 
   const backendURL = 'http://localhost:3001';
@@ -20,13 +27,13 @@ function App() {
 
     try {
       const formData = {
-        "WHO ARE YOUR CUSTOMERS?": questions[0],
-        "ARE THERE ANY SPECIAL REQUIREMENTS LIKE TECHNOLOGY, LOCATION, ETC?": questions[1],
-        "WHAT TYPES OF CUSTOMERS SHOULD BE EXCLUDED?": questions[2],
-        "WHAT ARE THE POSITIONS OF YOUR PROSPECTS?": questions[3],
+        [questionLabels[0]]: questions[0],
+        [questionLabels[1]]: questions[1],
+        [questionLabels[2]]: questions[2],
+        [questionLabels[3]]: questions[3],
       };
 
-      const response = await axios.post(`${submitURL}`, formData);
+      const response = await axios.post(submitURL, formData);
 
       console.log('Response from server:', response.data);
     } catch (error) {
@@ -36,15 +43,19 @@ function App() {
 
   return (
     <div className="container">
-      <div className='main-header'>
+      <div className="main-header">
         <h1>WHAT IS YOUR</h1>
         <h1>AUDIENCE ?</h1>
       </div>
       <form className="questions-form" onSubmit={handleSubmit}>
-        <Question label="WHO ARE YOUR CUSTOMERS?" value={questions[0]} onChange={(value) => handleQuestionChange(0, value)} />
-        <Question label="ARE THERE ANY SPECIAL REQUIREMENTS LIKE TECHNOLOGY, LOCATION, ETC?" value={questions[1]} onChange={(value) => handleQuestionChange(1, value)} />
-        <Question label="WHAT TYPES OF CUSTOMERS SHOULD BE EXCLUDED?" value={questions[2]} onChange={(value) => handleQuestionChange(2, value)} />
-        <Question label="WHAT ARE THE POSITIONS OF YOUR PROSPECTS?" value={questions[3]} onChange={(value) => handleQuestionChange(3, value)} />
+        {questionLabels.map((label, index) => (
+          <Question
+            key={index}
+            label={label}
+            value={questions[index]}
+            onChange={(value) => handleQuestionChange(index, value)}
+          />
+        ))}
         <div className="form-group">
           <button type="submit">SUBMIT</button>
         </div>
