@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import Question from './Question';
 import axios from 'axios';
+import ServerMessage from './ServerMessage';
 
 function App() {
   const questionLabels = [
@@ -13,6 +14,7 @@ function App() {
 
   const [questions, setQuestions] = useState(['', '', '', '']);
 
+  const [serverMessage, setServerMessage] = useState('');
   const backendURL = 'http://localhost:3001';
   const submitURL = `${backendURL}/api/submit`;
 
@@ -24,6 +26,8 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Clicked')
+    setServerMessage('Clicked');
 
     try {
       const formData = {
@@ -33,11 +37,19 @@ function App() {
         [questionLabels[3]]: questions[3],
       };
 
+      
       const response = await axios.post(submitURL, formData);
 
-      console.log('Response from server:', response.data);
+      if (response.status === 200) {
+        // The data was saved successfully
+        console.log('handleSubmit is called with 200'); // Add this log
+        console.log('Response from server:', response.data.message);
+        setServerMessage(response.data.message);
+      }
     } catch (error) {
+      console.log('handleSubmit is called with 500'); // Add this log
       console.error('Error:', error);
+      setServerMessage(error);
     }
   };
 
@@ -47,7 +59,7 @@ function App() {
         <h1>WHAT IS YOUR</h1>
         <h1>AUDIENCE ?</h1>
       </div>
-      <form className="questions-form" onSubmit={handleSubmit}>
+      <form className="questions-form">
         {questionLabels.map((label, index) => (
           <Question
             key={index}
@@ -57,9 +69,10 @@ function App() {
           />
         ))}
         <div className="form-group">
-          <button type="submit">SUBMIT</button>
+          <button type="submit" onClick={handleSubmit}>SUBMIT</button>
         </div>
       </form>
+      <ServerMessage message={serverMessage} />
     </div>
   );
 }
