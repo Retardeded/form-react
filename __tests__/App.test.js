@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import axios from 'axios';
-import App from '../App';
+import App from '../src/App';
 
 
 test('renders the App component', () => {

@@ -15,8 +15,9 @@ function App() {
   const [questions, setQuestions] = useState(['', '', '', '']);
 
   const [serverMessage, setServerMessage] = useState('');
-  const backendURL = 'http://localhost:3001';
-  const submitURL = `${backendURL}/api/submit`;
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
+  const submitPath = process.env.REACT_APP_API_SUBMIT_PATH;
+  const submitURL = `${backendURL}${submitPath}`;
 
   const handleQuestionChange = (index, value) => {
     const newQuestions = [...questions];
@@ -36,7 +37,6 @@ function App() {
         [questionLabels[2]]: questions[2],
         [questionLabels[3]]: questions[3],
       };
-
       
       const response = await axios.post(submitURL, formData);
 
@@ -47,7 +47,6 @@ function App() {
         setServerMessage(response.data.message);
       }
     } catch (error) {
-      console.log('handleSubmit is called with 500'); // Add this log
       console.error('Error:', error);
       setServerMessage(error);
     }
