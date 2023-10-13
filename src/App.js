@@ -27,8 +27,11 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Clicked')
-    setServerMessage('Clicked');
+
+    if (questions.some(question => question.trim() === '')) {
+      setServerMessage('Please fill in all questions before submitting.');
+      return;
+    }
 
     try {
       const formData = {
@@ -41,14 +44,21 @@ function App() {
       const response = await axios.post(submitURL, formData);
 
       if (response.status === 200) {
-        // The data was saved successfully
-        console.log('handleSubmit is called with 200'); // Add this log
         console.log('Response from server:', response.data.message);
         setServerMessage(response.data.message);
       }
     } catch (error) {
-      console.error('Error:', error);
-      setServerMessage(error);
+
+      if (error.response) {
+        console.log('Response Error:', error);
+        setServerMessage(`Response Error: ${error.message}`);
+      } else if (error.request) {
+        console.log('Request Error', error);
+        setServerMessage(`Request Error: ${error.message}`);
+      } else {
+        console.log('Error:', error);
+        setServerMessage(`Error: ${error.message}`);
+      }
     }
   };
 
